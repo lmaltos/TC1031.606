@@ -1,5 +1,7 @@
 #include <iostream>
-#include "myClase.h"
+#include "myclass.h"
+#include "Date.h"
+#include "Registro.h"
 
 using namespace std;
 
@@ -33,4 +35,21 @@ int main() {
     myClass<int,int> obji(4,5);
     myClass<float,char> objf(3.14,'+');
     myClass<char,float> objc('c',2.35);
+}
+
+void ComparaDate() {
+    Date a,b;
+    if (a > b) {
+
+    }
+}
+
+void ComparaRegistro() {
+    Registro reg1, reg2;
+    if (reg1.getDate() > reg2.getDate()) {
+
+    }
+    if (reg1 > reg2) {
+        
+    }
 }
