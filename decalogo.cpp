@@ -12,9 +12,11 @@ void decalogo07();
 void decalogo08();
 void decalogo09();
 void decalogo10();
+void arreglo();
 
 int main() {
-    decalogo10();
+    //decalogo10();
+    arreglo();
 }
 
 // Por cada NEW debe haber un DELETE
@@ -175,5 +177,41 @@ void decalogo10() {
     *p /= 2;
     cout << "*p = " << *p << endl;
     delete p;
+    cout << "p = " << p << endl;
+}
+
+void arreglo() {
+    int arr[100];
+    int *p, j;
+    p = arr;
+    cout << "arr = " << arr << endl;
+    cout << "p = " << p << endl;
+    j = rand() % 100;
+    if (arr[j] == *(p + j)) {
+        cout << "arr[j] y *(arr + j) Son equivalentes" << endl;
+    }
+    else {
+        cout << "arr[j] y *(arr + j) no son equivalentes" << endl;
+    }
+    
+    if (&arr[j] == (p + j)) {
+        cout << "&arr[j] y (arr + j) Son equivalentes" << endl;
+    }
+    else {
+        cout << "&arr[j] y (arr + j) no son equivalentes" << endl;
+    }
+
+    for (int i = 0; i < 10; i++) {
+        arr[i] = rand() % 50;
+        cout << "arr[" << i << "] = " << arr[i] << endl;
+        *p += 3;
+        p++;
+    }
+
+    for (int i = 0; i < 10; i++) {
+        cout << "arr[" << i << "] = " << arr[i] << endl;
+    }
+    
+    cout << "arr = " << arr << endl;
     cout << "p = " << p << endl;
 }
