@@ -23,8 +23,10 @@ stack<T>::stack() {
 
 template <typename T>
 void stack<T>::push(T dato) {
-    tope++;
-    datos[tope] = dato;
+    if (!isFull()){
+        tope++;
+        datos[tope] = dato;
+    }
 }
 
 template <typename T>
@@ -34,13 +36,18 @@ T stack<T>::top() {
 
 template <typename T>
 void stack<T>::pop() {
-    if (tope > -1)
+    if (!isEmpty())
         tope--;
 }
 
 template <typename T>
-bool stack<T>::isFull();
+bool stack<T>::isFull() {
+    return tope == MAX_SIZE - 1;
+}
+
 template <typename T>
-bool stack<T>::isEmpty();
+bool stack<T>::isEmpty() {
+    return tope == -1;
+}
 
 #endif
