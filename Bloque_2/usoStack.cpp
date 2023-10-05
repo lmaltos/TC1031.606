@@ -45,7 +45,7 @@ int main() {
     }
     cout << "pilaInt2.isFull() ? " << pilaInt2.isFull() << endl;
     while (!pilaInt2.isEmpty()) {
-        cout << pilaInt2.Top() << endl;
+        //cout << pilaInt2.Top() << endl;
         pilaInt2.pop();
     }
 }

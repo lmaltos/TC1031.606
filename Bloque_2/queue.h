@@ -1,6 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 #define QUEUE_MAX_SIZE 8
+#include <iostream>
 
 template <typename T>
 class queue {
@@ -23,19 +24,34 @@ queue<T>::queue() {
 
 template <typename T>
 void queue<T>::push(T dato) {
-    Final++;
-    //if (Final == QUEUE_MAX_SIZE) Final = 0;
-    //Final = Final % QUEUE_MAX_SIZE;
-    Final %= QUEUE_MAX_SIZE;
+    if (isFull())
+        return;
+    if (isEmpty()) {
+        Frente = Final = 0;
+    }
+    else {
+        Final++;
+        //if (Final == QUEUE_MAX_SIZE) Final = 0;
+        //Final = Final % QUEUE_MAX_SIZE;
+        Final %= QUEUE_MAX_SIZE;
+    }
     datos[Final] = dato;
 }
 
 template <typename T>
 void queue<T>::pop() {
-    Frente++;
-    if (Frente = QUEUE_MAX_SIZE) Frente = 0;
-    //Frente = Frente % QUEUE_MAX_SIZE;
-    //Frente %= QUEUE_MAX_SIZE;
+    if (isEmpty())
+        return;
+    std::cout << "pop(" << front() << ")\tFrente = " << Frente << "\tFinal = " << Final << std::endl;
+    if (Frente == Final) {
+        Frente = Final = -1;
+    }
+    else {
+        Frente++;
+        if (Frente == QUEUE_MAX_SIZE) Frente = 0;
+        //Frente = Frente % QUEUE_MAX_SIZE;
+        //Frente %= QUEUE_MAX_SIZE;
+    }
 }
 
 template <typename T>
