@@ -6,6 +6,7 @@ template <typename T>
 class stack2 {
   private:
     node<T> *top;
+    void borrar(node<T>);
   public:
     stack2();
     ~stack2();
@@ -19,6 +20,19 @@ class stack2 {
 template <typename T>
 stack2<T>::stack2() {
     top = NULL;
+}
+
+template <typename T>
+stack2<T>::~stack2() {
+    borrar(top);
+}
+
+template <typename T>
+void stack2<T>::borrar(node<T> nodo) {
+    if (nodo != NULL) {
+        borrar(nodo->getNext());
+        delete nodo;
+    }
 }
 
 template <typename T>
