@@ -1,10 +1,10 @@
 #include <iostream>
-#include "queue.h"
+#include "queue2.h"
 
 using namespace std;
 
 int main() {
-    queue<float> fila;
+    queue2<float> fila;
     cout << "fila.isEmpty() = " << fila.isEmpty() << endl;
     cout << "fila.isFull() = " << fila.isFull() << endl;
     fila.push(3.1);
