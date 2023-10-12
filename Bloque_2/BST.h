@@ -1,12 +1,15 @@
 #ifndef BST_H
 #define BST_H
 #include "nodeT.h"
+#include <iostream>
 
 class BST {
   private:
     nodeT *root;
   public:
     BST();
+    ~BST();
+    void borraNodo(nodeT*);
     bool search(int);
     void push(int);
     void pop(int);
@@ -14,6 +17,19 @@ class BST {
 
 BST::BST() {
     root = NULL;
+}
+
+BST::~BST() {
+    borraNodo(root);
+}
+
+void BST::borraNodo(nodeT *nodo) {
+    if (nodo == NULL)
+        return;
+    borraNodo(nodo->getLeft());
+    borraNodo(nodo->getRight());
+    std::cout << "Delete node " << nodo->getData() << std::endl;
+    delete nodo;
 }
 
 bool BST::search(int dato) {
