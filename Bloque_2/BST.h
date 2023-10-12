@@ -9,6 +9,7 @@ class BST {
     BST();
     bool search(int);
     void push(int);
+    void pop(int);
 };
 
 BST::BST() {
@@ -47,6 +48,63 @@ void BST::push(int dato) {
     }
     else {
         root = nodo;
+    }
+}
+
+void BST::pop(int dato) {
+    if (!search(dato))
+        return; // el elemento no se encuentra en el arbol
+    nodeT *p,*q = NULL;
+    p = root;
+    while (p->getData() != dato) {
+        q = p; // nodo padre
+        p = p->getData() > dato ? p->getLeft() : p->getRight();
+    } // regresa el nodo que tiene el dato
+    if (p->getLeft() == NULL && p->getRight() == NULL) { // se trata de un nodo hoja
+        if (q == NULL) { // es el unico dato en el arbol
+            root = NULL; // se vacia el arbol
+        }
+        else {
+            if (q->getData() > dato) {
+                q->setLeft(NULL); // el nodo p esta a la izquierda
+            }
+            else {
+                q->setRight(NULL); // el nodo p esta a la derecha porque dato > q->dato
+            }
+        }
+        delete p; // se libera nodo
+    }
+    else if (p->getLeft() == NULL || p->getRight() == NULL) { // se trata de un nodo con un solo hijo
+        nodeT *subarbol;
+        subarbol = p->getLeft() != NULL ? p->getLeft() : p->getRight();
+        if (q == NULL) { // p == root
+            root = subarbol;
+        }
+        if (q->getData() > dato) {
+            q->setLeft(subarbol); // el nodo p esta a la izquierda
+        }
+        else {
+            q->setRight(subarbol); // el nodo p esta a la derecha porque dato > q->dato
+        }
+        delete p; // se libera nodo
+    }
+    else { // se trata de un nodo con dos hijos
+        nodeT *predecesor;
+        predecesor = p->getLeft();
+        q = p;
+        while (predecesor->getRight() != NULL) {
+            q = predecesor;
+            predecesor = predecesor->getRight();
+        }
+        nodeT *subarbol = predecesor->getLeft();
+        p->setData(predecesor->getData()); // actualizamos informacion en nodo p
+        delete predecesor; // se libera nodo predecesor
+        if (q == p) {
+            q->setLeft(subarbol);
+        }
+        else {
+            q->setRight(subarbol);
+        }
     }
 }
 
