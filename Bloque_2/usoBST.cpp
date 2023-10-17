@@ -43,4 +43,12 @@ int main() {
         else
             cout << " ";
     }
+    cout << "Recorrido preorden" << endl;
+    arbol.printPreorden();
+    cout << "Recorrido inorden" << endl;
+    arbol.printInorden();
+    cout << "Recorrido postorden" << endl;
+    arbol.printPostorden();
+    cout << "Recorrido por nivel" << endl;
+    arbol.printPorNivel();
 }

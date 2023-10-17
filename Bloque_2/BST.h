@@ -1,6 +1,7 @@
 #ifndef BST_H
 #define BST_H
 #include "nodeT.h"
+#include "queue2.h"
 #include <iostream>
 
 class BST {
@@ -13,6 +14,14 @@ class BST {
     bool search(int);
     void push(int);
     void pop(int);
+    void preorden(nodeT*);
+    void printPreorden();
+    void inorden(nodeT*);
+    void printInorden();
+    void postorden(nodeT*);
+    void printPostorden();
+    void printPorNivel();
+    int calcNivel(nodeT*);
 };
 
 BST::BST() {
@@ -122,6 +131,72 @@ void BST::pop(int dato) {
             q->setRight(subarbol);
         }
     }
+}
+
+void BST::preorden(nodeT* nodo) {
+    if (nodo == NULL)
+        return;
+    std::cout << nodo->getData() << " ";
+    preorden(nodo->getLeft());
+    preorden(nodo->getRight());
+}
+
+void BST::printPreorden(){
+    preorden(root);
+}
+
+void BST::inorden(nodeT* nodo){
+    if (nodo == NULL)
+        return;
+    inorden(nodo->getLeft());
+    std::cout << nodo->getData() << " ";
+    inorden(nodo->getRight());
+}
+
+void BST::printInorden(){
+    inorden(root);
+}
+
+void BST::postorden(nodeT* nodo){
+    if (nodo == NULL)
+        return;
+    postorden(nodo->getLeft());
+    postorden(nodo->getRight());
+    std::cout << nodo->getData() << " ";
+}
+
+void BST::printPostorden(){
+    postorden(root);
+}
+
+
+void BST::printPorNivel() {
+    queue2<nodeT*> fila;
+    nodeT *nodo;
+    int nivelActual = 0;
+    fila.push(root);
+    while (!fila.isEmpty()) {
+        nodo = fila.front();
+        fila.pop();
+        if (nodo->getLeft() != NULL) fila.push(nodo->getLeft()); // agregamos nodo izquierdo
+        if (nodo->getRight() != NULL) fila.push(nodo->getRight()); // agregamos nodo derecho
+        if (calcNivel(nodo) != nivelActual) { // ocurrió un cambio de nivel
+            std::cout << std::endl;
+            nivelActual++;
+        }
+        std::cout << nodo->getData() << " ";
+    }
+}
+
+int BST::calcNivel(nodeT* nodo){
+    nodeT* p;
+    int nivel = 0;
+    p = root;
+    while (p->getData() != nodo->getData()) {
+        nivel++;
+        p = p->getData() > nodo->getData() ? p->getLeft() : p->getRight();
+    }
+    return nivel;
 }
 
 #endif
