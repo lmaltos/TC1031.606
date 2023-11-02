@@ -5,7 +5,7 @@
 #include <iostream>
 
 class BST {
-  private:
+  protected:
     nodeT *root;
   public:
     BST();
