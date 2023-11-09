@@ -2,11 +2,18 @@
 #define AVL_H
 #include "BST.h"
 #include "stack2.h"
+#include <iostream>
 
 class AVL : public BST {
   private:
     bool isBalanced(int,nodeT*);
     nodeT* getPivote(int);
+    void RSI(nodeT*,int);
+    void RSD(nodeT*,int);
+    void RDI(nodeT*,int);
+    void RDD(nodeT*,int);
+    void cambiarPivote(nodeT*,nodeT*);
+    nodeT* getPadre(nodeT*);
   public:
     void push(int);
     bool isBalanced(int);
@@ -14,11 +21,39 @@ class AVL : public BST {
 };
 
 void AVL::push(int n) {
+    std::cout << "Entra a push valor " << n << std::endl;
     BST::push(n); // agrega nodo como se haría en un BST
     if (!isBalanced(n)) { // no esta balanceado 
+        std::cout << "No esta balanceado" << std::endl;
         // encontrar el pivote
         nodeT *pivote = getPivote(n);
+        nodeT *A;
         // tipo de rotacion a realizar
+        if (pivote->getData() < n) {
+            std::cout << "Rotacion a la izquierda ";
+            A = pivote->getRight();
+            if (A->getData() < n) {
+                std::cout << "simple";
+                RSI(pivote,n);
+            }
+            else {
+                std::cout << "doble";
+                RDI(pivote,n);
+            }
+        }
+        else {
+            std::cout << "Rotacion a la derecha ";
+            A = pivote->getLeft();
+            if (A->getData() > n) {
+                std::cout << "simple";
+                RSD(pivote,n);
+            }
+            else {
+                std::cout << "doble";
+                RDD(pivote,n);
+            }
+        }
+        std::cout << "\tpivote " << pivote->getData() << std::endl;
     }
 }
 
@@ -52,20 +87,60 @@ int AVL::calcAltura(nodeT* nodo){
 }
 
 nodeT* AVL::getPivote(int n){
-    stack2<nodeT*> pila;
+    nodeT *pivote;
     nodeT *nodo = root;
     while (nodo->getData() != n) {
-        pila.push(nodo);
-        nodo = nodo->getData() < n ? nodo->getLeft() : nodo->getRight();
-    }
-    do {
-        nodo = pila.Top();
-        pila.pop();
         if (!isBalanced(n,nodo)) {
-            return nodo; // nodo mas cercano a la hoja que esta desbalanceado
+            pivote = nodo;
         }
-    } while (!pila.isEmpty());
-    return NULL;
+        nodo = nodo->getData() > n ? nodo->getLeft() : nodo->getRight();
+    }
+    return pivote;
+}
+
+void AVL::RSI(nodeT* pivote, int data) {
+    nodeT *A = pivote->getRight();
+    pivote->setRight(A->getLeft());
+    A->setLeft(pivote);
+    cambiarPivote(pivote,A);
+}
+
+void AVL::RSD(nodeT* pivote, int data) {
+    nodeT *A = pivote->getLeft();
+    pivote->setLeft(A->getRight());
+    A->setRight(pivote);
+    cambiarPivote(pivote,A);
+}
+
+void AVL::RDI(nodeT* pivote, int data) {
+    // ToDo
+}
+
+void AVL::RDD(nodeT* pivote, int data) {
+    // ToDo
+}
+
+void AVL::cambiarPivote(nodeT *B, nodeT *A) {
+    // Quien apuntaba a B, ahora apuntara a A
+    if (B == root) {
+        root = A;
+        return;
+    }
+    nodeT *padre = getPadre(B);
+    if (padre->getData() > B->getData())
+        padre->setLeft(A);
+    else
+        padre->setRight(A);
+}
+
+nodeT* AVL::getPadre(nodeT *B) {
+    nodeT *nodo = root;
+    nodeT *padre;
+    while (nodo != B) {
+        padre = nodo;
+        nodo = nodo->getData() > B->getData() ? nodo->getLeft() : nodo->getRight();
+    }
+    return padre;
 }
 
 #endif

@@ -3,5 +3,8 @@
 
 int main() {
     AVL arbol;
-    //arbol.isBalanced();
+    for (int i = 1; i < 65; i++) {
+        arbol.push(i);
+    }
+    arbol.printPorNivel();
 }

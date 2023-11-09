@@ -7,7 +7,7 @@ class queue2 {
   private:
     node<T> *tail;
   public:
-    queue2() {tail = NULL;}
+    queue2() {tail = nullptr;}
     ~queue2();
     void push(T);
     void pop();
@@ -45,7 +45,7 @@ void queue2<T>::pop(){
 
     node<T> *first = tail->getNext();
     if (tail == first) {
-        tail = NULL;
+        tail = nullptr;
     }
     else {
         node<T> *second = first->getNext();
@@ -61,7 +61,7 @@ T queue2<T>::front(){
 
 template <typename T>
 bool queue2<T>::isEmpty() {
-    return tail == NULL;
+    return tail == nullptr;
 }
 template <typename T>
 bool queue2<T>::isFull() {
