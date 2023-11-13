@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "grafo1.h"
+#include "grafo.h"
 
 using namespace std;
 
-int main() {
+int mainMA() {
     grafo1 grafo(10);
     ifstream archivo;
     int n,a;
@@ -22,5 +24,31 @@ int main() {
     }
     archivo.close();
     grafo.BreadthFirst();
+    cout << endl;
+    return 0;
+}
+
+int main() {
+    grafo G;
+    ifstream archivo;
+    string id, idAdyacencia;
+    string linea;
+    nodo *nodo;
+    
+    archivo.open("EjemploGrafoLA.txt");
+    while (!archivo.eof()) {
+        archivo >> id;
+        nodo = G.addNodo(id);
+        cout << "Se crea nodo " << id << endl;
+        getline(archivo,linea);
+        stringstream ss(linea);
+        while (!ss.eof()) {
+            ss >> idAdyacencia;
+            G.addAdyacencia(nodo, idAdyacencia);
+            cout << "se agrega adyacencia entre nodo " << id << " y nodo " << idAdyacencia << endl;
+        }
+    }
+    archivo.close();
+    G.DepthFirst();
     cout << endl;
 }
